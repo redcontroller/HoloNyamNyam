@@ -21,11 +21,13 @@ import MakePlace from '../pages/Place/MakePlace';
 import Map from '../pages/Place/Map';
 
 export default function Routers() {
+  const baseUrl = 'https://holonyamnyam.netlify.app/';
+
   return (
     <Routes>
-      <Route path='/' element={<Splash />} />
-      <Route path='/welcome' element={<Welcome />} />
-      <Route path='/login' element={<Login />} />
+      <Route path={baseUrl} element={<Splash />} />
+      <Route path={baseUrl + '/welcome'} element={<Welcome />} />
+      <Route path={baseUrl + '/login'} element={<Login />} />
       <Route path='/signup'>
         <Route index element={<SignUp />} />
         <Route path='profile' element={<ProfileSetting />} />
