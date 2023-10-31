@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "/HoloNyamNyam/static/js/main.16ed31c2.js",
+    "main.js": "/HoloNyamNyam/static/js/main.14822482.js",
     "static/media/Logo_white.svg": "/HoloNyamNyam/static/media/Logo_white.2b0c61c27ee700058676ffbd0fea82ed.svg",
     "static/media/logo_name.svg": "/HoloNyamNyam/static/media/logo_name.48751cc3925fc6595ade192a0a7a3bf4.svg",
     "static/media/button-logo.png": "/HoloNyamNyam/static/media/button-logo.176ab6f20bb1d5996a31.png",
@@ -19,9 +19,9 @@
     "index.html": "/HoloNyamNyam/index.html",
     "static/media/chevron-left.svg": "/HoloNyamNyam/static/media/chevron-left.ddb5767a2a8aad3ac9b155379a8b4c91.svg",
     "static/media/chevron-right.svg": "/HoloNyamNyam/static/media/chevron-right.d7d8e75cfe03eb15543571e0588aaeee.svg",
-    "main.16ed31c2.js.map": "/HoloNyamNyam/static/js/main.16ed31c2.js.map"
+    "main.14822482.js.map": "/HoloNyamNyam/static/js/main.14822482.js.map"
   },
   "entrypoints": [
-    "static/js/main.16ed31c2.js"
+    "static/js/main.14822482.js"
   ]
 }
