@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, BrowserRouter } from 'react-router-dom';
 import Splash from '../pages/Splash/Splash';
 import Welcome from '../pages/Welcome/Welcome';
 import Login from '../pages/Login/Login';
