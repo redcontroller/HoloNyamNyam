@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Splash from '../pages/Splash/Splash';
 import Welcome from '../pages/Welcome/Welcome';
 import Login from '../pages/Login/Login';
@@ -22,7 +22,7 @@ import Map from '../pages/Place/Map';
 
 export default function Routers() {
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <Routes basename={process.env.PUBLIC_URL}>
       <Route path='/' element={<Splash />} />
       <Route path='/welcome' element={<Welcome />} />
       <Route path='/login' element={<Login />} />
@@ -56,6 +56,6 @@ export default function Routers() {
       <Route path='/placelist' element={<PlaceList />} />
       <Route path='/makeplace' element={<MakePlace />} />
       <Route path='/map' element={<Map />} />
-    </BrowserRouter>
+    </Routes>
   );
 }
