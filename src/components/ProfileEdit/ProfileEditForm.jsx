@@ -18,7 +18,7 @@ import {
   StyledInput,
   ProfileInputImgButton,
   StyledProfileImg,
-  StyledSaveButton
+  // StyledSaveButton
 } from './ProfileEditFormStyle';
 
 const ProfileEditForm = ({ userInfo, setUserInfo }) => {
@@ -33,21 +33,23 @@ const ProfileEditForm = ({ userInfo, setUserInfo }) => {
     mode: 'onChange',
   });
 
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   const [profileImg, setProfileImg] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [abledBtn, setAbledBtn] = useState(true);
   const inputRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const data = location.state;
+  // const data = location.state;
 
   useEffect(() => {
     if (location.pathname === '/myprofile/edit') {
-      setValue("image", userInfo?.image || DefaultProfileInput);
-      setValue("username", userInfo?.username || null);
-      setValue("accountname", userInfo?.accountname || null);
-      setValue("intro", userInfo?.intro || null);
+      setValue('image', userInfo?.image || DefaultProfileInput);
+      setValue('username', userInfo?.username || null);
+      setValue('accountname', userInfo?.accountname || null);
+      setValue('intro', userInfo?.intro || null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname, userInfo]);
 
   const checkUserIdValid = async (accountname) => {
@@ -87,12 +89,12 @@ const ProfileEditForm = ({ userInfo, setUserInfo }) => {
         setProfileImg(userInfo?.image || DefaultProfileInput);
         const image = profileImg || userInfo?.image;
         const res = await profileEdit(formData, image, token);
-        localStorage.setItem("_id", res.data.user._id);
-        localStorage.setItem("accountname", formData.accountname);
-        navigate("/myprofile");
+        localStorage.setItem('_id', res.data.user._id);
+        localStorage.setItem('accountname', formData.accountname);
+        navigate('/myprofile');
       }
     } catch (errors) {
-      console.log(errors);
+      console.error(errors);
     }
   };
 
@@ -102,11 +104,11 @@ const ProfileEditForm = ({ userInfo, setUserInfo }) => {
 
   return (
     <StyledProfileWrap>
-      <Header 
-      type='editprofile'
-      handleUpdateProfileBtn={isValid}
-      uploadHandler={handleSubmit(handleSubmitData)}
-       />
+      <Header
+        type='editprofile'
+        handleUpdateProfileBtn={isValid}
+        uploadHandler={handleSubmit(handleSubmitData)}
+      />
       <ProfileFormContainer>
         <ImageFormContainer>
           <label>
@@ -133,7 +135,7 @@ const ProfileEditForm = ({ userInfo, setUserInfo }) => {
           id='username'
           type='text'
           autoComplete='off'
-          defaultValue={userInfo?.username || ""}
+          defaultValue={userInfo?.username || ''}
           {...register('username', {
             required: '계정이름은 필수 입력입니다',
             minLength: {
@@ -155,7 +157,7 @@ const ProfileEditForm = ({ userInfo, setUserInfo }) => {
           id='accountname'
           type='text'
           autoComplete='off'
-          defaultValue={userInfo?.accountname || ""}
+          defaultValue={userInfo?.accountname || ''}
           {...register('accountname', {
             required: '계정ID는 필수 입력입니다',
             pattern: {
@@ -170,17 +172,15 @@ const ProfileEditForm = ({ userInfo, setUserInfo }) => {
         <StyledInput
           id='intro'
           type='text'
-          defaultValue={userInfo?.intro || ""}
+          defaultValue={userInfo?.intro || ''}
           autoComplete='off'
           {...register('intro', {
             required: '간단한 소개 부탁드릴게요!',
           })}
           placeholder='자신을 나타낼 수 있는 소개 부탁드릴게요.'
         />
-        {errors.userintro && (
-          <StyledError>{errors.intro?.message}</StyledError>
-        )}
-{/*         <StyledSaveButton
+        {errors.userintro && <StyledError>{errors.intro?.message}</StyledError>}
+        {/*         <StyledSaveButton
           className='btn-profile-edit'
           $bgcolor={abledBtn ? 'active' : 'inactive'}
           disabled={!abledBtn}

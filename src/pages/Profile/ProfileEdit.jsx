@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { userInfoApi } from "../../api/user";
-import Header from '../../components/common/Header/Header';
+import { userInfoApi } from '../../api/user';
+// import Header from '../../components/common/Header/Header';
 import ProfileEditForm from '../../components/ProfileEdit/ProfileEditForm';
 //import ProfileSettingForm from '../../components/ProfileSetting/ProfileSettingForm';
-import { StyledProfileEditWrap } from '../../components/ProfileEdit/ProfileEditFormStyle';
+// import { StyledProfileEditWrap } from '../../components/ProfileEdit/ProfileEditFormStyle';
 
 //일단 구현 후 리팩토링
 /* 
@@ -27,18 +27,18 @@ z-index가 먹히지 않음 (position을 바꾸면 header 아래의 줄이 사�
 /* - ui 수정 안하면 안될까여.... */
 
 export default function ProfileEdit() {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState({
-    image: "",
-    username: "",
-    accountname: "",
-    intro: "",
+    image: '',
+    username: '',
+    accountname: '',
+    intro: '',
   });
 
-  
   useEffect(() => {
     prevUserInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const prevUserInfo = async () => {
@@ -48,13 +48,13 @@ export default function ProfileEdit() {
       setUserInfo({ image, username, accountname, intro });
     } catch (error) {
       console.error(error);
-      navigate("/error");
+      navigate('/error');
     }
   };
 
   return (
     <>
-      <ProfileEditForm userInfo={userInfo} setUserInfo={setUserInfo}/>
+      <ProfileEditForm userInfo={userInfo} setUserInfo={setUserInfo} />
       {/* <ProfileSettingForm /> */}
     </>
   );

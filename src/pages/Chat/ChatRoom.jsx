@@ -23,6 +23,7 @@ const List = styled.section`
 
 export default function ChatRoom() {
   const location = useLocation();
+  // eslint-disable-next-line no-unused-vars
   const [modal, setModal] = useRecoilState(modalState);
   const [inputValue, setInputValue] = useState('');
   const [chatValue, setChatValue] = useState([]);

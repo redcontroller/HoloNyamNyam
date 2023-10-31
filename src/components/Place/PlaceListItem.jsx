@@ -16,12 +16,14 @@ export default function PlaceListItem({ cardOpen, cardClose, cardClosed }) {
   const [placeInfo, setPlaceInfo] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
+  // eslint-disable-next-line no-unused-vars
   const [uploadList, setUploadList] = useState(cardClosed);
   useEffect(() => {
     getUserInfo();
     if (cardClosed) {
       getUserInfo();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location, cardClosed]);
 
   const getUserInfo = async () => {
@@ -35,7 +37,7 @@ export default function PlaceListItem({ cardOpen, cardClose, cardClosed }) {
       setPlaceInfo(res.data.product);
       setUploadList(!cardClosed);
     } catch (error) {
-      console.log('error');
+      console.error('error');
       navigate('/error');
     }
   };

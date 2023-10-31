@@ -41,6 +41,7 @@ export default function PlaceCard({ cardClose, id }) {
 
   useEffect(() => {
     getUserInfo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const getUserInfo = async () => {
@@ -57,7 +58,7 @@ export default function PlaceCard({ cardClose, id }) {
         setShouldFetchProductInfo(false);
       });
     } catch (err) {
-      console.log('error');
+      console.error('error');
       navigation('/error');
     }
   };
@@ -66,6 +67,7 @@ export default function PlaceCard({ cardClose, id }) {
     if (shouldFetchProductInfo) {
       getUserInfo();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldFetchProductInfo]);
 
   return (

@@ -52,6 +52,7 @@ const ProfileSettingForm = () => {
       setValue('userid', null);
       setValue('userintro', null);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location.pathname]);
 
   const checkUserIdValid = async (userid) => {
@@ -99,7 +100,7 @@ const ProfileSettingForm = () => {
         );
       }
     } catch (errors) {
-      console.log(errors);
+      console.error(errors);
     }
   };
 
