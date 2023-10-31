@@ -23,7 +23,8 @@ import Map from '../pages/Place/Map';
 export default function Routers() {
   return (
     <Routes basename={process.env.PUBLIC_URL}>
-      <Route path='/' element={<Splash />} />
+      {/* <Route path='/' element={<Splash />} /> */}
+      <Route path={process.env.PUBLIC_URL} element={<Splash />} />
       <Route path='/welcome' element={<Welcome />} />
       <Route path='/login' element={<Login />} />
       <Route path='/signup'>
