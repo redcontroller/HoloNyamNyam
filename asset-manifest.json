@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.js": "https://redcontroller.github.io/HoloNyamNyam/static/js/main.0791efc3.js",
+    "main.js": "https://redcontroller.github.io/HoloNyamNyam/static/js/main.0dbd9853.js",
     "static/media/Logo_white.svg": "https://redcontroller.github.io/HoloNyamNyam/static/media/Logo_white.2b0c61c27ee700058676ffbd0fea82ed.svg",
     "static/media/logo_name.svg": "https://redcontroller.github.io/HoloNyamNyam/static/media/logo_name.48751cc3925fc6595ade192a0a7a3bf4.svg",
     "static/media/button-logo.png": "https://redcontroller.github.io/HoloNyamNyam/static/media/button-logo.176ab6f20bb1d5996a31.png",
@@ -19,9 +19,9 @@
     "static/media/Star.svg": "https://redcontroller.github.io/HoloNyamNyam/static/media/Star.b5f5c0eddd5bf1b778769813df97902a.svg",
     "static/media/chevron-left.svg": "https://redcontroller.github.io/HoloNyamNyam/static/media/chevron-left.ddb5767a2a8aad3ac9b155379a8b4c91.svg",
     "static/media/chevron-right.svg": "https://redcontroller.github.io/HoloNyamNyam/static/media/chevron-right.d7d8e75cfe03eb15543571e0588aaeee.svg",
-    "main.0791efc3.js.map": "https://redcontroller.github.io/HoloNyamNyam/static/js/main.0791efc3.js.map"
+    "main.0dbd9853.js.map": "https://redcontroller.github.io/HoloNyamNyam/static/js/main.0dbd9853.js.map"
   },
   "entrypoints": [
-    "static/js/main.0791efc3.js"
+    "static/js/main.0dbd9853.js"
   ]
 }
