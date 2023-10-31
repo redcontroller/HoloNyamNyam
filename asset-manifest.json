@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.js": "./static/js/main.f25dce69.js",
-    "static/media/Logo_white.svg": "./static/media/Logo_white.2b0c61c27ee700058676ffbd0fea82ed.svg",
-    "static/media/logo_name.svg": "./static/media/logo_name.48751cc3925fc6595ade192a0a7a3bf4.svg",
-    "static/media/button-logo.png": "./static/media/button-logo.176ab6f20bb1d5996a31.png",
-    "static/media/SpriteIcon.svg": "./static/media/SpriteIcon.585742c3682ca8d456d72f0cb3e9c8ed.svg",
-    "static/media/navigationIcon.svg": "./static/media/navigationIcon.47c10920a4bccd5d8a1abd33d334c40a.svg",
-    "static/media/logo_bowl.svg": "./static/media/logo_bowl.24ef2461690f7464749a227747b84cc7.svg",
-    "static/media/error-404.svg": "./static/media/error-404.76ef13ff7224246684b9c892a3734ce0.svg",
-    "static/media/feedList-logo.svg": "./static/media/feedList-logo.3e3fa8dcd66bae7ad6119231f62e432b.svg",
-    "static/media/basic-profile-img.svg": "./static/media/basic-profile-img.708d33c958765ffd83bf7b71e5fd0cd9.svg",
-    "static/media/logo_bowl_gray.svg": "./static/media/logo_bowl_gray.079c3b5d6275da20f3b363488cfa2a04.svg",
-    "static/media/button-close.svg": "./static/media/button-close.f6015747132fc0e6587b0246a0d163f4.svg",
-    "static/media/upload-file.svg": "./static/media/upload-file.ce99651bc8ef89d0644c3facdd06535a.svg",
-    "static/media/arrow_top.svg": "./static/media/arrow_top.7d8ba5b93f2effc11efe22402569aad9.svg",
-    "static/media/stack.svg": "./static/media/stack.1f75142e45f9199bfdc5744a92377eae.svg",
-    "static/media/Star.svg": "./static/media/Star.b5f5c0eddd5bf1b778769813df97902a.svg",
-    "static/media/chevron-left.svg": "./static/media/chevron-left.ddb5767a2a8aad3ac9b155379a8b4c91.svg",
-    "index.html": "./index.html",
-    "static/media/chevron-right.svg": "./static/media/chevron-right.d7d8e75cfe03eb15543571e0588aaeee.svg",
-    "main.f25dce69.js.map": "./static/js/main.f25dce69.js.map"
+    "main.js": "/HoloNyamNyam/static/js/main.88211a85.js",
+    "static/media/Logo_white.svg": "/HoloNyamNyam/static/media/Logo_white.2b0c61c27ee700058676ffbd0fea82ed.svg",
+    "static/media/logo_name.svg": "/HoloNyamNyam/static/media/logo_name.48751cc3925fc6595ade192a0a7a3bf4.svg",
+    "static/media/button-logo.png": "/HoloNyamNyam/static/media/button-logo.176ab6f20bb1d5996a31.png",
+    "static/media/SpriteIcon.svg": "/HoloNyamNyam/static/media/SpriteIcon.585742c3682ca8d456d72f0cb3e9c8ed.svg",
+    "static/media/navigationIcon.svg": "/HoloNyamNyam/static/media/navigationIcon.47c10920a4bccd5d8a1abd33d334c40a.svg",
+    "static/media/logo_bowl.svg": "/HoloNyamNyam/static/media/logo_bowl.24ef2461690f7464749a227747b84cc7.svg",
+    "static/media/error-404.svg": "/HoloNyamNyam/static/media/error-404.76ef13ff7224246684b9c892a3734ce0.svg",
+    "static/media/feedList-logo.svg": "/HoloNyamNyam/static/media/feedList-logo.3e3fa8dcd66bae7ad6119231f62e432b.svg",
+    "static/media/basic-profile-img.svg": "/HoloNyamNyam/static/media/basic-profile-img.708d33c958765ffd83bf7b71e5fd0cd9.svg",
+    "static/media/logo_bowl_gray.svg": "/HoloNyamNyam/static/media/logo_bowl_gray.079c3b5d6275da20f3b363488cfa2a04.svg",
+    "static/media/button-close.svg": "/HoloNyamNyam/static/media/button-close.f6015747132fc0e6587b0246a0d163f4.svg",
+    "static/media/upload-file.svg": "/HoloNyamNyam/static/media/upload-file.ce99651bc8ef89d0644c3facdd06535a.svg",
+    "static/media/arrow_top.svg": "/HoloNyamNyam/static/media/arrow_top.7d8ba5b93f2effc11efe22402569aad9.svg",
+    "static/media/stack.svg": "/HoloNyamNyam/static/media/stack.1f75142e45f9199bfdc5744a92377eae.svg",
+    "static/media/Star.svg": "/HoloNyamNyam/static/media/Star.b5f5c0eddd5bf1b778769813df97902a.svg",
+    "index.html": "/HoloNyamNyam/index.html",
+    "static/media/chevron-left.svg": "/HoloNyamNyam/static/media/chevron-left.ddb5767a2a8aad3ac9b155379a8b4c91.svg",
+    "static/media/chevron-right.svg": "/HoloNyamNyam/static/media/chevron-right.d7d8e75cfe03eb15543571e0588aaeee.svg",
+    "main.88211a85.js.map": "/HoloNyamNyam/static/js/main.88211a85.js.map"
   },
   "entrypoints": [
-    "static/js/main.f25dce69.js"
+    "static/js/main.88211a85.js"
   ]
 }
