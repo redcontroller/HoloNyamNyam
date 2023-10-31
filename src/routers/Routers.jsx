@@ -22,7 +22,7 @@ import Map from '../pages/Place/Map';
 
 export default function Routers() {
   return (
-    <Routes>
+    <BrowserRouter basename={ProcessingInstruction.env.PUBLIC_URL}>
       <Route path='/' element={<Splash />} />
       <Route path='/welcome' element={<Welcome />} />
       <Route path='/login' element={<Login />} />
@@ -56,6 +56,6 @@ export default function Routers() {
       <Route path='/placelist' element={<PlaceList />} />
       <Route path='/makeplace' element={<MakePlace />} />
       <Route path='/map' element={<Map />} />
-    </Routes>
+    </BrowserRouter>
   );
 }
