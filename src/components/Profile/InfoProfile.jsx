@@ -11,29 +11,37 @@ import {
   UserName,
   UserId,
   UserText,
+  GradientBg,
+  CtnTap,
 } from './StyledInfoProfile';
 import { userInfoApi } from '../../api/user';
 import { ProfileApi } from '../../api/profile';
-import { userFeedCntApi } from '../../api/feed';
+import { userFeedListApi } from '../../api/feed';
 import Loading from '../Loading/Loading';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { userInfoState } from '../../recoil/userInfoAtom';
+import { imgState } from '../../recoil/skeletonAtom';
 
-export default function InfoProfile({ type }) {
-  const [userInfo, setUserInfo] = useState({});
+export default function InfoProfile({ type, scrollToFeeds }) {
+  const [userInfo, setUserInfo] = useRecoilState(userInfoState);
   const [postCnt, setPostCnt] = useState(0);
   const [follow, setFollow] = useState(true);
   const [followerInfo, setFollowerInfo] = useState([]);
   const [loading, setLoading] = useState(true);
   const location = useLocation();
-  const token = localStorage.getItem('token');
-  const myId = localStorage.getItem('_id');
+  const token = sessionStorage.getItem('token');
+  const myId = sessionStorage.getItem('_id');
+  const setImgLoading = useSetRecoilState(imgState);
 
   useEffect(() => {
+    setImgLoading(true);
     const getUserInfo = async () => {
       const yourAccountname = location.state;
       setLoading(true);
 
       if (type === 'my') {
         const res = await userInfoApi(token);
+        setTimeout(() => setImgLoading(false), 500);
         setFollowerInfo(res.data.user.follower);
         const {
           accountname,
@@ -55,7 +63,7 @@ export default function InfoProfile({ type }) {
           intro,
         });
         if (accountname) {
-          const res = await userFeedCntApi(accountname, token);
+          const res = await userFeedListApi(accountname, token, 9999, 0);
           const cnt = res.data.post.length;
           setPostCnt(cnt);
         }
@@ -82,7 +90,7 @@ export default function InfoProfile({ type }) {
           intro,
         });
         if (accountname) {
-          const res = await userFeedCntApi(accountname, token);
+          const res = await userFeedListApi(accountname, token, 999, 0);
           const cnt = res.data.post.length;
           setPostCnt(cnt);
         }
@@ -90,16 +98,16 @@ export default function InfoProfile({ type }) {
       setLoading(false);
     };
     getUserInfo();
-  }, [location, type, token]);
+  }, [type, token, location.state, setUserInfo, setImgLoading]);
 
   useEffect(() => {
     const following = followerInfo.some((x) => x === myId);
     setFollow(!following);
-    localStorage.setItem('follow', !following ? 'false' : 'true');
+    sessionStorage.setItem('follow', !following ? 'false' : 'true');
   }, [followerInfo, myId]);
 
   useEffect(() => {
-    const savedFollow = localStorage.getItem('follow');
+    const savedFollow = sessionStorage.getItem('follow');
     setFollow(savedFollow === 'false');
   }, []);
 
@@ -107,21 +115,24 @@ export default function InfoProfile({ type }) {
     <Loading />
   ) : (
     <>
+      <GradientBg />
       <InfoTopWrap>
         <ProfileImg src={userInfo.image} alt='프로필 이미지' />
         <CntWrap>
-          <div>
+          <CtnTap onClick={scrollToFeeds}>
             <CntSpan>{postCnt}</CntSpan>
             <CntP>posts</CntP>
-          </div>
+          </CtnTap>
           <Link
             to='/followerlist'
             state={{
               accountname: userInfo.accountname,
             }}
           >
-            <CntSpan>{userInfo.followerCount}</CntSpan>
-            <CntP>followers</CntP>
+            <CtnTap>
+              <CntSpan>{userInfo.followerCount}</CntSpan>
+              <CntP>followers</CntP>
+            </CtnTap>
           </Link>
           <Link
             to='/followinglist'
@@ -129,8 +140,10 @@ export default function InfoProfile({ type }) {
               accountname: userInfo.accountname,
             }}
           >
-            <CntSpan>{userInfo.followingCount}</CntSpan>
-            <CntP>followings</CntP>
+            <CtnTap>
+              <CntSpan>{userInfo.followingCount}</CntSpan>
+              <CntP>followings</CntP>
+            </CtnTap>
           </Link>
         </CntWrap>
       </InfoTopWrap>

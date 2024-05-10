@@ -5,7 +5,7 @@
   "editor.formatOnSave": true,
   // 파일을 저장할 때마다 'eslint' 규칙에 따라 자동으로 코드를 수정
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
+    "source.fixAll.eslint": "explicit"
   },
   "editor.tabSize": 2,
   "javascript.format.enable": false,

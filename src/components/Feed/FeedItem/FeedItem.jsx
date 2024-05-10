@@ -16,10 +16,15 @@ import {
   Container,
   SocialSvg,
   MoreBtn,
+  LikeAnimaiton,
+  CommentAnimaiton,
 } from './StyledFeedItem';
 import { feedLikeApi, feedUnlikeApi } from '../../../api/feed';
 import sprite from '../../../images/SpriteIcon.svg';
 import Carousel from '../../Carousels/Carousel';
+import { SkeletonImg, SkeletonProfImg } from '../../common/Skeleton/Skeleton';
+import { useRecoilValue } from 'recoil';
+import { imgState } from '../../../recoil/skeletonAtom';
 
 export default function FeedItem({
   modalOpen,
@@ -48,17 +53,10 @@ export default function FeedItem({
   const navigate = useNavigate();
   const [isHearted, setIsHearted] = useState(infoToIterate.hearted);
   const [heartCnt, setHeartCnt] = useState(infoToIterate.heartCount);
+  const imgLoading = useRecoilValue(imgState);
 
-  function moveDetail(id) {
-    navigate('/detailfeed', {
-      state: {
-        id: id,
-        infoToIterate: infoToIterate,
-      },
-    });
-  }
   const feedLike = async () => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     try {
       if (isHearted) {
         await feedUnlikeApi(infoToIterate.id, token);
@@ -69,15 +67,22 @@ export default function FeedItem({
         setIsHearted(!isHearted);
         setHeartCnt(heartCnt + 1);
       }
-      if (getUserInfo) {
-        getUserInfo();
-      }
     } catch (error) {
       return false;
     }
   };
+
+  function moveDetail(id) {
+    navigate('/feeddetail', {
+      state: {
+        id: id,
+        infoToIterate: infoToIterate,
+      },
+    });
+  }
+
   function moveProfile(accountname) {
-    const where = localStorage.getItem('accountname');
+    const where = sessionStorage.getItem('accountname');
     if (accountname === where) {
       navigate('/myprofile', {
         state: {
@@ -92,6 +97,7 @@ export default function FeedItem({
       });
     }
   }
+
   function formatDate(dateString) {
     const dateObj = new Date(dateString);
     const year = dateObj.getFullYear();
@@ -109,21 +115,31 @@ export default function FeedItem({
   }, [feedInfo]);
 
   return (
-    <Container>
+    <Container $dim={detail === true ? null : true}>
       {infoToIterate && infoToIterate.author && (
         <FeedUser>
-          <FeedUserImg
-            src={infoToIterate.author.image}
-            alt='사용자 이미지'
-            onClick={() => moveProfile(infoToIterate.author.accountname)}
-          />
+          {imgLoading ? (
+            <div>
+              <SkeletonProfImg />
+            </div>
+          ) : (
+            <FeedUserImg
+              src={infoToIterate.author.image}
+              alt='사용자 이미지'
+              onClick={() => moveProfile(infoToIterate.author.accountname)}
+            />
+          )}
           <FeedUserBox
             onClick={() => moveProfile(infoToIterate.author.accountname)}
           >
             <FeedUserName>{infoToIterate.author.username}</FeedUserName>
             <FeedUserId>@ {infoToIterate.author.accountname}</FeedUserId>
           </FeedUserBox>
-          <MoreBtn aria-label='더보기 버튼'>
+          <MoreBtn
+            aria-label='더보기 버튼'
+            type='button'
+            title='옵션 및 설정 더보기'
+          >
             <SocialSVG
               id='icon-more-vertical'
               strokeColor='#c4c4c4'
@@ -133,25 +149,41 @@ export default function FeedItem({
           </MoreBtn>
         </FeedUser>
       )}
-      <FeedContent
-        onClick={detail === true ? null : () => moveDetail(infoToIterate.id)}
-        style={{ cursor: detail === true ? 'default' : 'pointer' }}
-      >
-        <FeedText>{infoToIterate.content}</FeedText>
-        {infoToIterate.image && infoToIterate.author && (
-          <Carousel
-            images={infoToIterate.image}
-            userInfo={infoToIterate.author.username}
-          />
-        )}
+      <FeedContent>
+        <FeedText
+          onClick={detail === true ? null : () => moveDetail(infoToIterate.id)}
+          style={{ cursor: detail === true ? 'default' : 'pointer' }}
+        >
+          {infoToIterate.content}
+        </FeedText>
+        {infoToIterate.image &&
+          infoToIterate.author &&
+          (imgLoading ? (
+            <SkeletonImg key={infoToIterate.id} />
+          ) : (
+            <Carousel
+              images={infoToIterate.image}
+              userInfo={infoToIterate.author.username}
+              onImageClick={
+                detail === true ? null : () => moveDetail(infoToIterate.id)
+              }
+              detail={detail}
+            />
+          ))}
         <FeedInfoBox>
           <FeedBtnBox>
-            <BtnLike onClick={() => feedLike(infoToIterate.id)}>
-              {isHearted ? (
-                <SocialSVG id='icon-heart' color='red' strokeColor='red' />
-              ) : (
-                <SocialSVG id='icon-heart' />
-              )}
+            <BtnLike
+              onClick={() => feedLike(infoToIterate.id)}
+              type='button'
+              title='클릭하면 좋아요를 남길 수 있어요.'
+            >
+              <LikeAnimaiton>
+                {isHearted ? (
+                  <SocialSVG id='icon-heart' color='red' strokeColor='red' />
+                ) : (
+                  <SocialSVG id='icon-heart' />
+                )}
+              </LikeAnimaiton>
               {heartCnt}
             </BtnLike>
 
@@ -159,8 +191,12 @@ export default function FeedItem({
               onClick={() => {
                 moveDetail(infoToIterate.id);
               }}
+              type='button'
+              title='클릭하면 상세보기로 이동해서 댓글을 남길 수 있어요.'
             >
-              <SocialSVG id='icon-message-circle-2' />
+              <CommentAnimaiton>
+                <SocialSVG id='icon-message-circle-2' />
+              </CommentAnimaiton>
               {commentCnt}
             </BtnComment>
           </FeedBtnBox>

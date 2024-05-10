@@ -1,16 +1,45 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/jsx-no-useless-fragment */
 import React, { useRef, useState, useEffect } from 'react';
 import FollowItem from '../../components/FollowItem/FollowItem';
 import Header from '../../components/common/Header/Header';
 import Nav from '../../components/common/Nav/Nav';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { FollowList, FollowListItem } from './FollowerListStyle';
+import {
+  FollowList,
+  FollowListItem,
+  NoFollowCryImg,
+  ImgWrap,
+  NoFollowP,
+} from './FollowerListStyle';
 import { followerListApi, followingListApi } from '../../api/follow';
+import FeedlistImg from '../../images/feedList-logo.svg';
+import Loading from '../../components/Loading/Loading';
 
 export default function FollowerList({ type, followType }) {
-  const token = localStorage.getItem('token');
-  const location = useLocation();
   const navigate = useNavigate();
-  const accountname = location.state.accountname;
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (
+      !sessionStorage.getItem('_id') ||
+      !sessionStorage.getItem('accountname') ||
+      !sessionStorage.getItem('token')
+    ) {
+      navigate('/');
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    setLoading(true);
+    type === 'followers'
+      ? getFollowerList(limit, skip).then(() => setLoading(false))
+      : getFollowingList(limit, skip).then(() => setLoading(false));
+  }, []);
+
+  const token = sessionStorage.getItem('token');
+  const location = useLocation();
+  const accountname = location.state ? location.state.accountname : null;
   const [followerList, setFollowerList] = useState([]);
   const [followingList, setFollowingList] = useState([]);
   const [page, setPage] = useState(0);
@@ -62,6 +91,14 @@ export default function FollowerList({ type, followType }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
+  if (
+    !sessionStorage.getItem('_id') ||
+    !sessionStorage.getItem('accountname') ||
+    !sessionStorage.getItem('token')
+  ) {
+    return null;
+  }
+
   const followTypeUI = {
     followerList: (
       <>
@@ -80,6 +117,12 @@ export default function FollowerList({ type, followType }) {
               </FollowListItem>
             );
           })}
+          {followerList.length === 0 && (
+            <ImgWrap>
+              <NoFollowCryImg src={FeedlistImg} alt='이미지 설명' />
+              <NoFollowP>아무도 없어요</NoFollowP>
+            </ImgWrap>
+          )}
           <div ref={observer} />
         </FollowList>
         <Nav />
@@ -105,12 +148,17 @@ export default function FollowerList({ type, followType }) {
               </FollowListItem>
             );
           })}
+          {followingList.length === 0 && (
+            <ImgWrap>
+              <NoFollowCryImg src={FeedlistImg} alt='이미지 설명' />
+              <NoFollowP>아무도 없어요</NoFollowP>
+            </ImgWrap>
+          )}
           <div ref={observer} />
         </FollowList>
         <Nav />
       </>
     ),
   };
-  // eslint-disable-next-line react/jsx-no-useless-fragment
-  return <>{followTypeUI[followType]}</>;
+  return loading ? <Loading /> : followTypeUI[followType];
 }

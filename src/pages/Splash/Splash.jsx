@@ -6,7 +6,17 @@ import { Appear, LogoBowl, LogoName } from './SplashStyle';
 
 export default function Splash() {
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
+
+  useEffect(() => {
+    if (
+      sessionStorage.getItem('_id') ||
+      sessionStorage.getItem('accountname') ||
+      sessionStorage.getItem('token')
+    ) {
+      navigate('/home');
+    }
+  }, [navigate]);
 
   useEffect(() => {
     if (token) {

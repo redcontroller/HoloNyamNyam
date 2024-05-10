@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '../../components/common/Header/Header';
 import PlaceListItem from '../../components/Place/PlaceListItem';
 import Nav from '../../components/common/Nav/Nav';
@@ -7,11 +6,12 @@ import styled from 'styled-components';
 import PlaceCard from '../../components/Modal/PlaceCard/PlaceCard';
 import { useRecoilState } from 'recoil';
 import { cardShowState } from '../../recoil/cardShowAtom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const List = styled.section`
-  padding: 48px 0 60px 0;
+  padding: 48px 0 81px 0;
   background-color: white;
-  height: calc(100vh - 108px);
+  height: 100%;
 `;
 
 const PlaceWrap = styled.ul`
@@ -22,8 +22,32 @@ const PlaceWrap = styled.ul`
 `;
 
 export default function PlaceList() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (
+      !sessionStorage.getItem('_id') ||
+      !sessionStorage.getItem('accountname') ||
+      !sessionStorage.getItem('token')
+    ) {
+      navigate('/');
+    }
+  }, [navigate]);
+
   const [selectedId, setSelectedId] = useState(null);
   const [cardClosed, setCardClosed] = useState(false);
+  const [name, setName] = useState('');
+  const location = useLocation();
+  const { nickname } = location.state || {};
+
+  useEffect(() => {
+    if (nickname) {
+      setName(nickname);
+      sessionStorage.setItem('nickname', nickname.name);
+    } else {
+      setName(sessionStorage.getItem('nickname'));
+    }
+  }, [nickname]);
 
   const [cardShow, setCardShow] = useRecoilState(cardShowState);
   function cardClose(e) {
@@ -42,9 +66,17 @@ export default function PlaceList() {
       setCardClosed(false);
     }
   }, [cardClosed]);
+
+  if (
+    !sessionStorage.getItem('_id') ||
+    !sessionStorage.getItem('accountname') ||
+    !sessionStorage.getItem('token')
+  ) {
+    return null;
+  }
   return (
     <>
-      <Header type='matzip' />
+      <Header type='matzip' name={name} />
       <List>
         <PlaceWrap>
           <PlaceListItem cardOpen={cardOpen} cardClosed={cardClosed} />

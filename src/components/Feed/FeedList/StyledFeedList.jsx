@@ -29,7 +29,7 @@ const FeedItemList = styled.ul`
   flex-direction: column;
   align-items: center;
   background-color: white;
-  margin: 16px 20px 60px;
+  margin: 16px 10px 70px;
 
   &::-webkit-scrollbar {
     width: 10px;
@@ -48,17 +48,24 @@ const FeedListItem = styled.li`
 
 const GridItemWrap = styled.ul`
   display: grid;
+  /* grid-template-rows: repeat(3, 114px); */
+  grid-template-rows: repeat(1, 114px);
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 114px);
   gap: 8px;
-  padding: 16px 16px 80px 16px;
+  padding: 16px 16px 0 16px;
   height: 100%;
-  min-height: 425px;
+  /* min-height: 425px; */
   background-color: white;
 `;
 
 const GridItemList = styled.li`
   display: ${(props) => (props.$hasimage ? 'none' : 'block')};
+`;
+
+const GridItemContainer = styled.article`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 70px;
 `;
 
 const IconContainer = styled.div`
@@ -148,6 +155,7 @@ export {
   FeedItemList,
   FeedListItem,
   GridItemWrap,
+  GridItemContainer,
   GridItemList,
   IconContainer,
   Icon,

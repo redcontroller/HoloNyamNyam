@@ -11,13 +11,14 @@ import Search from '../pages/Search/Search';
 import ChatList from '../pages/Chat/ChatList';
 import ErrorPage from '../pages/Error/ErrorPage';
 import ChatRoom from '../pages/Chat/ChatRoom';
-import MakeFeed from '../pages/Feed/MakeFeed';
+import FeedUpload from '../pages/Feed/FeedUpload';
 import Profile from '../pages/Profile/Profile';
 import ProfileEdit from '../pages/Profile/ProfileEdit';
-import DetailFeed from '../pages/Feed/DetailFeed';
+import FeedDetail from '../pages/Feed/FeedDetail';
 import FollowerList from '../pages/FollowerList/FollowerList';
 import PlaceList from '../pages/Place/PlaceList';
 import MakePlace from '../pages/Place/MakePlace';
+import EditPlace from '../pages/Place/EditPlace';
 import Map from '../pages/Place/Map';
 
 export default function Routers() {
@@ -36,8 +37,8 @@ export default function Routers() {
       <Route path='/chat' element={<ChatList />} />
       <Route path='/chatroom/:accountname' element={<ChatRoom />} />
       <Route path='/error' element={<ErrorPage />} />
-      <Route path='/makefeed' element={<MakeFeed />} />
-      <Route path='/detailfeed' element={<DetailFeed />} />
+      <Route path='/feedupload' element={<FeedUpload />} />
+      <Route path='/feeddetail' element={<FeedDetail />} />
       <Route path='/myprofile'>
         <Route index element={<Profile type='my' />} />
         <Route path='edit' element={<ProfileEdit />} />
@@ -55,6 +56,7 @@ export default function Routers() {
       />
       <Route path='/placelist' element={<PlaceList />} />
       <Route path='/makeplace' element={<MakePlace />} />
+      <Route path='/editplace' element={<EditPlace />} />
       <Route path='/map' element={<Map />} />
     </Routes>
   );

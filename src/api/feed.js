@@ -16,7 +16,7 @@ export const feedUploadApi = async (content, image, token) => {
   await axios.post(
     `${BASE_URL}/post`,
     {
-      Feed: {
+      post: {
         content: content,
         image: image,
       },
@@ -40,7 +40,7 @@ export const feedInfoApi = async (feedId, token) => {
   return res;
 };
 
-export const feedEditApi = async (feedId, token, content, image) => {
+export const feedEditApi = async ({ feedId, token, content, image }) => {
   const res = await axios.put(
     `${BASE_URL}/post/${feedId}`,
     {
@@ -115,18 +115,4 @@ export const userFeedListApi = async (accountname, token, limit, skip) => {
     },
   );
   return res;
-};
-
-export const userFeedCntApi = async (accountname, token) => {
-  try {
-    const res = await axios.get(`${BASE_URL}/post/${accountname}/userpost`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-type': 'application/json',
-      },
-    });
-    return res;
-  } catch (err) {
-    console.error('API 응답에 실패하였습니다.', err);
-  }
 };

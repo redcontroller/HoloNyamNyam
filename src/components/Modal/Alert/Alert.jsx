@@ -13,7 +13,7 @@ import { feedDeleteApi, feedReportApi } from '../../../api/feed';
 import { recommendDeleteApi } from '../../../api/recommend';
 import { commentDeleteApi, commentReportApi } from '../../../api/comments';
 import { userInfoApi } from '../../../api/user';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState } from 'recoil';
 import { modalState } from '../../../recoil/modalAtom';
 import { cardShowState } from '../../../recoil/cardShowAtom';
 
@@ -27,23 +27,27 @@ export default function Alert({
   const navigate = useNavigate();
   const location = useLocation();
   const [modal, setModal] = useRecoilState(modalState);
-  // eslint-disable-next-line no-unused-vars
-  const [cardShow, setCardShow] = useRecoilState(cardShowState);
+  const setCardShow = useSetRecoilState(cardShowState);
+
   const onClickLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('accountname');
-    localStorage.removeItem('_id');
-    localStorage.removeItem('follow');
-    navigate('/welcome');
-    setModal((prevModal) => ({ ...prevModal, show: false }));
+    setModal({ show: false, type: 'myProfile', commentId: null, feedId: null });
+    setTimeout(() => {
+      sessionStorage.clear();
+      navigate('/');
+    }, 0);
   };
   const handleDeleteFeed = async () => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     try {
       await feedDeleteApi(modal.feedId, token);
       alertClose('feed');
-      navigate('/myprofile');
-      modalClose('modification');
+      modalClose('myFeed');
+      navigate('/myprofile', {
+        state: {
+          accountname: sessionStorage.getItem('accountname'),
+          feedId: modal.feedId,
+        },
+      });
       try {
         await userInfoApi(token);
       } catch (error) {
@@ -53,10 +57,11 @@ export default function Alert({
       console.error('Delete request failed', error);
       navigate('/error');
     }
+    // window.location.reload();
   };
 
   const handleDeletePlace = async () => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     try {
       await recommendDeleteApi(productId, token);
       alertClose('place');
@@ -75,7 +80,7 @@ export default function Alert({
   };
 
   const handleDeleteComment = async () => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     try {
       await commentDeleteApi(modal.feedId, modal.commentId, token);
       alertClose('comment');
@@ -87,7 +92,7 @@ export default function Alert({
   };
 
   const handleReportComment = async () => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     try {
       await commentReportApi(modal.feedId, modal.commentId, token);
       alertClose('reportComment');
@@ -99,7 +104,7 @@ export default function Alert({
   };
 
   const handleReportFeed = async () => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     try {
       await feedReportApi(modal.feedId, token);
       alertClose('reportFeed');

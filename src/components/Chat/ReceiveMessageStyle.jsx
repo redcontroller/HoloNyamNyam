@@ -11,12 +11,12 @@ const MessageWrap = styled.li`
 const ProfileImg = styled.img`
   width: 42px;
   border-radius: 50%;
+  background-color: #fff;
 `;
 
 const MessageText = styled.article`
   max-width: 240px;
   padding: 12px;
-  border: 1px solid #c4c4c4;
   border-radius: 0 10px 10px 10px;
   font-size: 14px;
   line-height: 16px;

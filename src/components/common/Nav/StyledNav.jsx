@@ -28,7 +28,7 @@ const NavLink = styled(Link)`
   color: #767676;
 
   &.active {
-    color: #f26e22;
+    color: #ff644b;
   }
 `;
 
@@ -60,6 +60,16 @@ const TopIcon = styled.img`
   height: 24px;
 `;
 
+const SvgDiv = styled.div`
+  width: 24px;
+  height: 24px;
+  transition: transform 0.2s ease;
+  transform: scale(${(props) => props.scale});
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+
 export {
   NavWrapper,
   NavList,
@@ -68,4 +78,5 @@ export {
   ScrollButton,
   TopIcon,
   ButtonContainer,
+  SvgDiv,
 };

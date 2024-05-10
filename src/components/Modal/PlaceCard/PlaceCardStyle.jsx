@@ -6,13 +6,14 @@ const PlaceDim = styled.div`
   left: 50%;
   transform: translateX(-50%);
   height: 100%;
-  z-index: 999;
+  z-index: 900;
   background-color: rgba(0, 0, 0, 0.3);
   width: 100%;
   max-width: 390px;
 `;
 
 const PlaceCardArticle = styled.article`
+  padding: 10px;
   width: 304px;
   background-color: white;
   border-radius: 10px;
@@ -29,29 +30,32 @@ const PlaceCardArticle = styled.article`
 const PlaceListImg = styled.img`
   display: block;
   width: 100%;
-  height: 180px;
+  height: 300px;
   object-fit: cover;
   border-radius: 8px 8px 0 0;
 `;
 
 const PlaceTextSection = styled.section`
-  padding: 18px 16px 23px;
+  padding: 15px 5px 10px;
   position: relative;
 `;
 
 const PlaceName = styled.h4`
+  max-width: 202px;
   font-size: 20px;
   line-height: 20px;
-  font-weight: 400;
+  font-weight: 600;
   display: inline-block;
+  margin-right: 3px;
 `;
 
 const PlaceScoreSpan = styled.span`
   display: inline-block;
   color: #000;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 400;
   line-height: 14px;
+  margin-left: 2px;
 `;
 
 const PlaceLocationP = styled.p`
@@ -62,21 +66,20 @@ const PlaceLocationP = styled.p`
 
 const PlaceMoreBtn = styled.button`
   position: absolute;
-  top: 16px;
-  right: 5px;
+  top: 14px;
+  right: 0px;
 `;
 
 const PlaceCloseBtn = styled.button`
   position: absolute;
-  width: 16px;
-  height: 16px;
-  right: 0;
-  top: -200px;
+  right: -20px;
+  top: -323px;
+  width: 30px
+  height: 30px;
 `;
 
 const TitleWrapper = styled.article`
   display: flex;
-  gap: 4px;
   align-items: center;
 `;
 

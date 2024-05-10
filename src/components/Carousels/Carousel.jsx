@@ -9,8 +9,18 @@ import {
 } from './StyledCarousel';
 import Left from '../../images/chevron-left.svg';
 import Right from '../../images/chevron-right.svg';
-export default function Carousel({ images, userInfo, onImageClick }) {
-  const carouselImages = images.includes(',') ? images.split(',') : [images];
+export default function Carousel({
+  images,
+  userInfo,
+  onImageClick,
+  previews,
+  detail,
+}) {
+  const carouselImages = previews
+    ? previews
+    : images.includes(',')
+    ? images.split(',')
+    : [images];
   const [currentIndex, setCurrentIndex] = useState(0);
   const handlePrevious = () => {
     setCurrentIndex((prevIndex) =>
@@ -29,24 +39,27 @@ export default function Carousel({ images, userInfo, onImageClick }) {
           <img
             key={index}
             src={
-              imgItem.trim().startsWith('https://')
+              previews
+                ? imgItem
+                : imgItem.trim().startsWith('https://')
                 ? imgItem
                 : `https://api.mandarin.weniv.co.kr/${imgItem.trim()}`
             }
             className={currentIndex === index ? 'active' : 'inactive'}
-            alt={`포스트이미지 by @${images.userInfo}.`}
+            alt={previews ? userInfo : `포스트이미지 by @${images.userInfo}.`}
             crossOrigin='anonymous'
             loading='lazy'
             onClick={onImageClick}
+            style={{ cursor: detail === true ? 'default' : 'pointer' }}
           />
         ))}
       </CarouselImages>
       {carouselImages.length > 1 && (
         <div>
-          <LeftButton onClick={handlePrevious}>
+          <LeftButton onClick={handlePrevious} title='이전 이미지 보기'>
             <img src={Left} alt='이전 사진 보기 화살표 버튼' />
           </LeftButton>
-          <RightButton onClick={handleNext}>
+          <RightButton onClick={handleNext} title='다음 이미지 보기'>
             <img src={Right} alt='다음 사진 보기 화살표 버튼' />
           </RightButton>
         </div>
