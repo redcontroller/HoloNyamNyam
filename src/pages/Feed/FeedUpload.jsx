@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import FeedCreate from '../../components/Feed/FeedCreate/FeedCreate';
+import FeedEdit from '../../components/Feed/FeedEdit/FeedEdit';
 import Nav from '../../components/common/Nav/Nav';
 
 export default function FeedUpload() {
@@ -25,7 +25,7 @@ export default function FeedUpload() {
   }
   return (
     <>
-      <FeedCreate />
+      <FeedEdit />
       <Nav />
     </>
   );

@@ -13,7 +13,7 @@ import {
   UploadImgInput,
   UploadImgWrapper,
   CloseImgBtn,
-} from '../../Feed/ImgPrev/StyledFeedImgPrev';
+} from '../ImgPrev/StyledFeedImgPrev';
 import {
   StyledContainer,
   StyledFeed,
@@ -25,6 +25,7 @@ import {
 import Carousel from '../../Carousels/Carousel';
 
 export default function FeedCreate() {
+  // 데이터
   // eslint-disable-next-line no-unused-vars
   const [feed, setFeed] = useRecoilState(feedState);
   const [isValid, setIsValid] = useState(false);
@@ -42,7 +43,8 @@ export default function FeedCreate() {
   const maxSize = 10 * 1024 * 1024;
   const navigate = useNavigate();
 
-  const uploadFeed = async (imgFile, content, accountname) => {
+  // 액션: 피드 생성 함수
+  const uploadNewFeed = async (imgFile, content, accountname) => {
     try {
       const uploadedImageUrls = [];
       for (const image of imgFile) {
@@ -67,15 +69,17 @@ export default function FeedCreate() {
     }
   };
 
-  const handleUpload = () => {
+  // 액션: 피드 생성 버튼의 이벤트 핸들러
+  const handleCreate = () => {
     if (isValid) {
-      uploadFeed(imgFile, content, username);
+      uploadNewFeed(imgFile, content, username);
     } else {
       alert('게시글이 작성되지 않았습니다.');
     }
   };
 
-  const feedEditUpload = async (uploadPreview, imgFile, content) => {
+  // 액션: 피드 수정 함수
+  const uploadEditedFeed = async (uploadPreview, imgFile, content) => {
     try {
       const newUploadPreview = [...uploadPreview]; // 기존 images
       // 새로 추가할 이미지가 있다면,
@@ -129,14 +133,16 @@ export default function FeedCreate() {
     }
   };
 
+  // 액션: 피드 수정 버튼의 이벤트 핸들러
   const handleEdit = () => {
     if (isValid) {
-      feedEditUpload(uploadPreview, imgFile, content);
+      uploadEditedFeed(uploadPreview, imgFile, content);
     } else {
       alert('게시글이 수정되지 않았습니다.');
     }
   };
 
+  // 액션: 텍스트 콘텐츠 또는 업로드된 이미지가 있는지 검사하는 함수
   const checkContent = () => {
     if (
       (!content || content.trim().length === 0) &&
@@ -147,6 +153,7 @@ export default function FeedCreate() {
       setIsValid(true);
     }
   };
+
   useEffect(() => {
     checkContent();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -297,7 +304,7 @@ export default function FeedCreate() {
         // type='followings'
         type='upload'
         handleUploadBtn={isValid}
-        uploadHandler={feed.type === 'edit' ? handleEdit : handleUpload}
+        uploadHandler={feed.type === 'edit' ? handleEdit : handleCreate}
         edit={feed.type === 'edit' ? true : false}
       />
       <StyledContainer>
