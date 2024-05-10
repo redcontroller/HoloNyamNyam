@@ -16,7 +16,7 @@
 그럼, '홀로냠냠'과 함께 즐거운 혼밥하세요!
 
 **[개인 GitHub Page]** <br />
-**배포 사이트**: [깃 페이지 링크](https://redcontroller.github.io/HoloNyamNyam/welcome)<br />
+**배포 사이트**: [깃 페이지 링크](https://redcontroller.github.io/HoloNyamNyam/)<br />
 
 **[원본]** <br />
 🍰 **배포 사이트** : [https://holonyam.netlify.app](https://holonyam.netlify.app/)<br>
