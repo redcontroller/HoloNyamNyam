@@ -142,7 +142,7 @@ export default function FeedCreate() {
     }
   };
 
-  // 액션: 텍스트 콘텐츠 또는 업로드된 이미지가 있는지 검사하는 함수
+  // 계산: 텍스트 콘텐츠 또는 업로드된 이미지가 있는지 검사하는 함수
   const checkContent = () => {
     if (
       (!content || content.trim().length === 0) &&
@@ -154,6 +154,7 @@ export default function FeedCreate() {
     }
   };
 
+  // 액션: 콘텐츠 유효성 검사
   useEffect(() => {
     checkContent();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -164,11 +165,16 @@ export default function FeedCreate() {
     checkContent();
   };
 
+  // 액션: 이미지를 업로드하는 버튼의 이벤트 핸들러
   const handleUploadImg = async (e) => {
     if (!e.target?.files) {
       return;
     }
 
+    // 데이터: 업로드 파일과 관련된 데이터
+    // const uploadedFileObjects = [];
+    const compressedFiles = [];
+    const imageUploadPromises = [];
     const fileList = Array.from(e.target.files);
 
     if (uploadPreview.length + fileList.length > 3) {
@@ -176,12 +182,9 @@ export default function FeedCreate() {
       return;
     }
 
-    const uploadedFileObjects = [];
-    const uploadedFileUrls = [];
-    const imageUploadPromises = [];
-
+    // 액션: 이미지 최적화 작업
     const processFile = async (file) => {
-      // 파일 크기 및 형식 확인
+      // 파일 크기 및 형식 검사
       if (file.size > maxSize) {
         alert('파일 사이즈는 10MB 이하만 가능합니다');
         return;
@@ -192,7 +195,7 @@ export default function FeedCreate() {
         return;
       }
 
-      // 이미지 압축
+      // 데이터: 이미지 압축 사양
       const options = {
         maxSizeMB: 0.5,
         maxWidthOrHeight: 700,
@@ -200,10 +203,11 @@ export default function FeedCreate() {
       };
 
       try {
+        // 계산: 이미지 압축 (Blob 객체로 반환)
         const compressedFile = await imageCompression(file, options);
-        uploadedFileObjects.push(compressedFile);
+        // uploadedFileObjects.push(compressedFile);
 
-        // 미리보기 업데이트
+        // 액션: 압축된 파일을 URL 형태로 반환하여 이미지 미리보기 추가
         const promise = imageCompression.getDataUrlFromFile(compressedFile);
         promise.then((result) => {
           setUploadPreview((prevUploadPreview) => [
@@ -212,15 +216,15 @@ export default function FeedCreate() {
           ]);
         });
 
-        // 이미지를 base64로 변환
+        // 계산: 압축 이미지를 base64로 변환
         const reader = new FileReader();
         imageUploadPromises.push(
           new Promise((resolve) => {
             reader.readAsDataURL(compressedFile);
             reader.onloadend = async () => {
-              const base64data = reader.result;
-              const imageUrl = await formDataHandler(base64data);
-              uploadedFileUrls.push(imageUrl);
+              const base64data = reader.result; // Base64 타입의 데이터
+              const imageFile = await formDataHandler(base64data); // image.jpg명의 file 객체
+              compressedFiles.push(imageFile);
               resolve();
             };
           }),
@@ -234,22 +238,25 @@ export default function FeedCreate() {
       await processFile(file);
     }
 
-    // 모든 이미지 업로드가 완료된 후
+    // 모든 이미지 업로드가 완료된 후 이미지 데이터 배열 업데이트
     await Promise.all(imageUploadPromises);
-    setImgFile((prevImgFile) => [...prevImgFile, ...uploadedFileUrls]);
+    setImgFile((prevImgFile) => [...prevImgFile, ...compressedFiles]);
   };
 
+  // 계산: Base64 타입으로 인코딩된 이미지를 디코딩하고, 이름이 image.jpg인 파일 객체를 반환하는 함수
   const formDataHandler = async (dataURI) => {
     const byteString = atob(dataURI.split(',')[1]);
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const encodingArray = new Uint8Array(arrayBuffer);
     for (let i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
+      encodingArray[i] = byteString.charCodeAt(i);
     }
-    const blob = new Blob([ab], { type: 'image/jpeg' });
+    const blob = new Blob([arrayBuffer], { type: 'image/jpeg' }); // Binary Large Object
     const file = new File([blob], 'image.jpg', { type: 'image/jpeg' });
     return file;
   };
+
+  // 액션: 이미지 미리보기에서 취소 버튼을 처리하는 이벤트 핸들러 함수
   const removeImg = (index) => {
     const updatedUploadPreview = uploadPreview.filter(
       (_imageData, currentIndex) => currentIndex !== index,
@@ -261,29 +268,25 @@ export default function FeedCreate() {
     setUploadPreview(updatedUploadPreview);
     setImgFile(updatedImageUrls);
   };
-  const dragStart = (e, position) => {
+
+  // 계산: 드래그 시작 지점 저장
+  const dragStart = (position) => {
     dragItem.current = position;
   };
 
-  // 드래그중인 대상이 위로 포개졌을 때
-  const dragEnter = (e, position) => {
+  // 계산: 드래그중인 대상이 위로 포개졌을 때 지점 저장
+  const dragEnter = (position) => {
     dragOverItem.current = position;
   };
 
-  // 드랍 (커서 뗐을 때)
+  // 액션: 드랍 (커서 뗐을 때) 시 배열 요소의 index 변경 작업
   const drop = () => {
     const newPreviewList = [...uploadPreview];
     const newFileList = [...imgFile]; // imgFile 리스트도 변경되야 해서 복사합니다.
-    // const newUrlList = [...imgUrl]; // imgUrl 리스트도 변경되야 해서 복사합니다.
 
     const dragItemValue = newPreviewList[dragItem.current];
     newPreviewList.splice(dragItem.current, 1);
     newPreviewList.splice(dragOverItem.current, 0, dragItemValue);
-
-    // imgUrl 순서도 바꿔줍니다.
-    // const dragItemUrl = newUrlList[dragItem.current];
-    // newUrlList.splice(dragItem.current, 1);
-    // newUrlList.splice(dragOverItem.current, 0, dragItemUrl);
 
     const dragItemFile = newFileList[dragItem.current];
     newFileList.splice(dragItem.current, 1);
@@ -294,8 +297,6 @@ export default function FeedCreate() {
 
     setUploadPreview(newPreviewList);
     setImgFile(newFileList); // 변경된 순서의 imgFile을 설정합니다.
-    // setImgUrl(newUrlList); // 변경된 순서의 imgFile을 설정합니다.
-    // window.console.log(imgFile);
   };
 
   return (
